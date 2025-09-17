@@ -1,0 +1,16 @@
+{
+  "name": "faststudy-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install:frontend": "npm install --prefix frontend",
+    "install:backend": "pip install -r backend/requirements.txt",
+    "start:frontend": "npm start --prefix frontend",
+    "start:backend": "uvicorn src.main:app --reload --app-dir backend",
+    "dev": "npm run start:frontend & npm run start:backend"
+  }
+}
