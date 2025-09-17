@@ -1,30 +1,70 @@
-from fastapi.testclient import TestClient
-from src.main import app
+import pytest
+from httpx import AsyncClient
 
-client = TestClient(app)
+# FastAPI 애플리케이션은 나중에 main.py에서 임포트될 예정
+# from backend.src.main import app
 
-def test_get_tutorial_by_id_contract():
-    """Ensures the /api/v1/tutorials/{tutorial_id} endpoint contract is met for a valid ID."""
-    # We assume a tutorial with id 'class-based-services' will exist.
-    tutorial_id = "class-based-services"
-    response = client.get(f"/api/v1/tutorials/{tutorial_id}")
-    
-    assert response.status_code == 200
-    
-    # Validate the structure of the response
-    item = response.json()
-    assert "id" in item
-    assert "category_id" in item
-    assert "title" in item
-    assert "content" in item
-    assert item["id"] == tutorial_id
-    assert isinstance(item["category_id"], str)
-    assert isinstance(item["title"], str)
-    assert isinstance(item["content"], str)
+# 테스트용 클라이언트 생성 (FastAPI 애플리케이션이 준비되면 사용)
+# @pytest.fixture(scope="module")
+# async def client():
+#     async with AsyncClient(app=app, base_url="http://test") as ac:
+#         yield ac
 
-def test_get_tutorial_not_found_contract():
-    """Ensures the endpoint returns 404 for a non-existent tutorial ID."""
-    tutorial_id = "non-existent-id"
-    response = client.get(f"/api/v1/tutorials/{tutorial_id}")
-    
-    assert response.status_code == 404
+@pytest.mark.asyncio
+async def test_get_tutorials_by_category_contract():
+    # TODO: FastAPI 애플리케이션이 준비되면 실제 API 호출로 대체
+    # test_category_id = "60d5ec49f8c7a4001c8c4d0a" # 예시 ID, 실제로는 생성된 ID 사용
+    # response = await client.get(f"/categories/{test_category_id}/tutorials")
+    # assert response.status_code == 200
+    # assert isinstance(response.json(), list)
+
+    assert False, "GET /categories/{category_id}/tutorials contract test: Implement actual API call"
+
+@pytest.mark.asyncio
+async def test_get_tutorial_by_id_contract():
+    # TODO: FastAPI 애플리케이션이 준비되면 실제 API 호출로 대체
+    # test_tutorial_id = "60d5ec49f8c7a4001c8c4d0b" # 예시 ID
+    # response = await client.get(f"/tutorials/{test_tutorial_id}")
+    # assert response.status_code == 404
+
+    assert False, "GET /tutorials/{tutorial_id} contract test: Implement actual API call"
+
+@pytest.mark.asyncio
+async def test_post_tutorial_contract():
+    # TODO: FastAPI 애플리케이션이 준비되면 실제 API 호출로 대체
+    # new_tutorial_data = {
+    #     "title": "Test Tutorial",
+    #     "category_id": "60d5ec49f8c7a4001c8c4d0a",
+    #     "content": "# Test Content",
+    #     "order": 1
+    # }
+    # response = await client.post("/tutorials", json=new_tutorial_data)
+    # assert response.status_code == 201
+    # assert "id" in response.json()
+
+    assert False, "POST /tutorials contract test: Implement actual API call"
+
+@pytest.mark.asyncio
+async def test_put_tutorial_contract():
+    # TODO: FastAPI 애플리케이션이 준비되면 실제 API 호출로 대체
+    # test_tutorial_id = "60d5ec49f8c7a4001c8c4d0b" # 예시 ID
+    # updated_tutorial_data = {
+    #     "title": "Updated Tutorial",
+    #     "category_id": "60d5ec49f8c7a4001c8c4d0a",
+    #     "content": "# Updated Content",
+    #     "order": 2
+    # }
+    # response = await client.put(f"/tutorials/{test_tutorial_id}", json=updated_tutorial_data)
+    # assert response.status_code == 200
+    # assert response.json()["title"] == "Updated Tutorial"
+
+    assert False, "PUT /tutorials/{tutorial_id} contract test: Implement actual API call"
+
+@pytest.mark.asyncio
+async def test_delete_tutorial_contract():
+    # TODO: FastAPI 애플리케이션이 준비되면 실제 API 호출로 대체
+    # test_tutorial_id = "60d5ec49f8c7a4001c8c4d0b" # 예시 ID
+    # response = await client.delete(f"/tutorials/{test_tutorial_id}")
+    # assert response.status_code == 204
+
+    assert False, "DELETE /tutorials/{tutorial_id} contract test: Implement actual API call"

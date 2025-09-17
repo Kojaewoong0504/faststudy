@@ -1,0 +1,330 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FastAPI Learning Content API",
+    "version": "1.0.0",
+    "description": "API for managing FastAPI learning categories and tutorials."
+  },
+  "paths": {
+    "/categories": {
+      "get": {
+        "summary": "카테고리 목록 조회",
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "get": {
+        "summary": "특정 카테고리 조회",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "카테고리를 찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/categories/{category_id}/tutorials": {
+      "get": {
+        "summary": "카테고리별 튜토리얼 목록 조회",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tutorial"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "카테고리를 찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/tutorials": {
+      "post": {
+        "summary": "튜토리얼 생성",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TutorialCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "튜토리얼 생성 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tutorial"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청"
+          }
+        }
+      }
+    },
+    "/tutorials/{tutorial_id}": {
+      "get": {
+        "summary": "특정 튜토리얼 조회",
+        "parameters": [
+          {
+            "name": "tutorial_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tutorial"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "튜토리얼을 찾을 수 없음"
+          }
+        }
+      },
+      "put": {
+        "summary": "튜토리얼 업데이트",
+        "parameters": [
+          {
+            "name": "tutorial_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TutorialUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "튜토리얼 업데이트 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tutorial"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청"
+          },
+          "404": {
+            "description": "튜토리얼을 찾을 수 없음"
+          }
+        }
+      },
+      "delete": {
+        "summary": "튜토리얼 삭제",
+        "parameters": [
+          {
+            "name": "tutorial_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "튜토리얼 삭제 성공"
+          },
+          "404": {
+            "description": "튜토리얼을 찾을 수 없음"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "카테고리 ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "카테고리 이름"
+          },
+          "description": {
+            "type": "string",
+            "description": "카테고리 설명"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "Tutorial": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "튜토리얼 ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "튜토리얼 제목"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "카테고리 ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "튜토리얼 내용 (Markdown)"
+          },
+          "order": {
+            "type": "integer",
+            "description": "튜토리얼 순서"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "생성일시"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "수정일시"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "category_id",
+          "content",
+          "order"
+        ]
+      },
+      "TutorialCreate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "튜토리얼 제목"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "카테고리 ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "튜토리얼 내용 (Markdown)"
+          },
+          "order": {
+            "type": "integer",
+            "description": "튜토리얼 순서"
+          }
+        },
+        "required": [
+          "title",
+          "category_id",
+          "content",
+          "order"
+        ]
+      },
+      "TutorialUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "튜토리얼 제목"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "카테고리 ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "튜토리얼 내용 (Markdown)"
+          },
+          "order": {
+            "type": "integer",
+            "description": "튜토리얼 순서"
+          }
+        }
+      }
+    }
+  }
+}

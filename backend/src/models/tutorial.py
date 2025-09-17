@@ -1,16 +1,15 @@
-from pydantic import BaseModel
+from odmantic import Model, Field, ObjectId
 from typing import Optional
+from datetime import datetime
 
-class Category(BaseModel):
-    """Represents a grouping of related learning tutorials."""
-    id: str
-    name: str
-    description: str
-
-class Tutorial(BaseModel):
-    """Represents a single learning module or topic."""
-    id: str
-    category_id: str
-    title: str
+class Tutorial(Model):
+    title: str = Field(min_length=1, max_length=100)
+    category_id: ObjectId
     content: str
-    author: Optional[str] = None
+    order: int = Field(ge=0)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    model_config = {
+        "collection": "tutorials"
+    }

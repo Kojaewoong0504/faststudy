@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/faststudy
+      - DATABASE_NAME=faststudy
+    depends_on:
+      - mongodb
+    networks:
+      - faststudy-network
+    command: ["uvicorn", "backend.src.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "debug"]
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - faststudy-network
+
+networks:
+  faststudy-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

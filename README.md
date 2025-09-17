@@ -7,6 +7,8 @@ This project aims to provide a practical, real-world focused learning platform f
 -   **Monorepo Structure**: Manages both backend (FastAPI) and frontend (React) within a single repository.
 -   **Practical FastAPI Patterns**: Focuses on real-world implementation details beyond basic documentation.
 -   **Modular Backend**: Organized with dedicated modules for API, services, and models.
+-   **Containerized with Docker**: Backend and frontend services are containerized using Docker for easy deployment and environment consistency.
+-   **MongoDB Integration**: Uses MongoDB as the NoSQL database for flexible data storage.
 -   **Component-Based Frontend**: Built with React, featuring reusable components for categories and tutorials.
 -   **Comprehensive Setup Guide**: Easy-to-follow instructions for setting up the development environment.
 
@@ -16,6 +18,7 @@ This guide provides the steps to set up and run the development environment for 
 
 ### Prerequisites
 
+- Docker and Docker Compose
 - Node.js (v20+)
 - Python (v3.11+)
 - `pip` and `venv` for Python package management
@@ -28,7 +31,16 @@ This guide provides the steps to set up and run the development environment for 
     cd <repository-directory>
     ```
 
-2.  **Set up the Backend (FastAPI)**:
+2.  **Build and run with Docker Compose**:
+    ```bash
+    docker-compose up --build
+    ```
+    - The backend API will be available at `http://localhost:8000`.
+    - The React application will be available at `http://localhost:3000`.
+
+### Running the Development Servers (without Docker Compose - for individual development)
+
+-   **Set up the Backend (FastAPI)**:
     ```bash
     # Navigate to the backend directory
     cd backend
@@ -41,7 +53,14 @@ This guide provides the steps to set up and run the development environment for 
     pip install -r requirements.txt
     ```
 
-3.  **Set up the Frontend (React)**:
+-   **Run the Backend Server**:
+    -   Make sure you are in the `backend/` directory with the virtual environment activated.
+    ```bash
+    uvicorn src.main:app --reload
+    ```
+    -   The API will be available at `http://127.0.0.1:8000`.
+
+-   **Set up the Frontend (React)**:
     ```bash
     # Navigate to the frontend directory from the root
     cd frontend
@@ -49,15 +68,6 @@ This guide provides the steps to set up and run the development environment for 
     # Install Node.js dependencies
     npm install
     ```
-
-### Running the Development Servers
-
--   **Run the Backend Server**:
-    -   Make sure you are in the `backend/` directory with the virtual environment activated.
-    ```bash
-    uvicorn src.main:app --reload
-    ```
-    -   The API will be available at `http://127.0.0.1:8000`.
 
 -   **Run the Frontend Server**:
     -   Make sure you are in the `frontend/` directory.
@@ -73,6 +83,13 @@ This project uses a monorepo structure:
 -   `backend/`: Contains the FastAPI application.
 -   `frontend/`: Contains the React application.
 -   `package.json` (root): Manages monorepo workspaces and common scripts.
+
+## API Documentation
+
+Access the interactive OpenAPI documentation (Swagger UI) for the backend API at:
+
+-   `http://localhost:8000/docs`
+-   `http://localhost:8000/redoc`
 
 ## Testing
 

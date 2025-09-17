@@ -1,6 +1,11 @@
 # FastAPI and other backend dependencies will be listed here.
 fastapi
-uvicorn[standard]
+uvicorn
+motor
+pydantic
+odmantic
+httptools
+websockets
 
 # Testing
 pytest

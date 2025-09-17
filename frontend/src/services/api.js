@@ -6,7 +6,7 @@ const apiClient = axios.create({
 
 export const fetchCategories = async () => {
   try {
-    const response = await apiClient.get('/api/v1/categories');
+    const response = await apiClient.get('/categories');
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -14,9 +14,19 @@ export const fetchCategories = async () => {
   }
 };
 
+export const fetchTutorialsByCategory = async (categoryId) => {
+  try {
+    const response = await apiClient.get(`/categories/${categoryId}/tutorials`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching tutorials for category ${categoryId}:`, error);
+    throw error;
+  }
+};
+
 export const fetchTutorialById = async (id) => {
   try {
-    const response = await apiClient.get(`/api/v1/tutorials/${id}`);
+    const response = await apiClient.get(`/tutorials/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching tutorial ${id}:`, error);
