@@ -1,0 +1,7 @@
+# FastAPI and other backend dependencies will be listed here.
+fastapi
+uvicorn[standard]
+
+# Testing
+pytest
+httpx
